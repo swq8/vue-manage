@@ -357,7 +357,7 @@ export default defineComponent({
         show(row: any) {
             this.infoDialog.visible = true
             this.infoDialog.loading = true
-            orderApi.getOrderInfo({ no: row.no }).then((result: any) => {
+            orderApi.getOrder({ no: row.no }).then((result: any) => {
                 this.record = JSON.parse(JSON.stringify(result.data.order))
                 this.infoDialog.loading = false
             })

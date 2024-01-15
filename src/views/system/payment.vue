@@ -110,7 +110,7 @@ export default defineComponent({
     },
     methods: {
         edit(row: any) {
-            systemApi.getPaymentInfo({ name: row.name }).then((result: any) => {
+            systemApi.getPayment({ name: row.name }).then((result: any) => {
                 this.record = Object.assign({}, result.data.payment)
                 this.dialogVisible = true
             })

@@ -125,7 +125,7 @@ export default defineComponent({
         },
         async init() {
             this.loading = true
-            let result = await expressApi.getFeeRuleInfo()
+            let result = await expressApi.getFeeRule()
             let record = result.data.record
             record.firstFee = Number(priceFormat(record.firstFee))
             record.additionalFee = Number(priceFormat(record.additionalFee))

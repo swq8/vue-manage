@@ -1,26 +1,26 @@
 <template>
-    <el-dialog v-model="dialogVisible" :title="form.userId === null ? '新建管理账号' : '修改管理账号'" width="460"
+    <el-dialog v-model="dialogVisible" :title="record.userId === null ? '新建管理账号' : '修改管理账号'" width="460"
         @close="formRef.clearValidate()">
 
-        <el-form label-width="78px" :model="form" :rules="rules" inline ref="formRef">
+        <el-form label-width="78px" :model="record" :rules="rules" inline ref="formRef">
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="会员账号" prop="name">
-                        <el-input v-model="form.name" placeholder="会员账号" style="width:328px" />
+                        <el-input v-model="record.name" placeholder="会员账号" style="width:328px" />
                     </el-form-item>
                     <el-form-item label="姓名">
-                        <el-input v-model="form.trueName" placeholder="姓名" style="width:328px" />
+                        <el-input v-model="record.trueName" placeholder="姓名" style="width:328px" />
                     </el-form-item>
 
                     <el-form-item label="角色">
-                        <el-select v-model="form.rolesId" multiple placeholder="Select" style="width: 328px">
+                        <el-select v-model="record.rolesId" multiple placeholder="Select" style="width: 328px">
                             <el-option v-for="item in result.data.roles" :key="item.id" :label="item.name"
                                 :value="item.id" />
                         </el-select>
                     </el-form-item>
 
                     <el-form-item label="使用状态" required>
-                        <el-radio-group v-model="form.enable" style="width:328px">
+                        <el-radio-group v-model="record.enable" style="width:328px">
                             <el-radio :label="true">启用</el-radio>
                             <el-radio :label="false">停用</el-radio>
                         </el-radio-group>
@@ -71,9 +71,9 @@
     </el-row>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent } from 'vue'
 import systemApi from '@/api/system'
-import { ElMessage, ElMessageBox, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { Delete, Edit, Memo } from '@element-plus/icons-vue'
 import { objAssign } from '@/utils/index'
@@ -82,13 +82,45 @@ import { useUserStore } from '@/stores/user'
 
 export default defineComponent({
     data() {
+        const router = useRouter()
+        const RECORD_EMPTY = {
+            id: null,
+            userId: null,
+            name: '',
+            trueName: '',
+            rolesId: [] as any[],
+            enable: true,
+        } as any
+        const record = Object.assign({}, RECORD_EMPTY)
+        const query = {
+            page: 1,
+            pageSize: 20
+        }
+        const result: any = {
+            data: {
+                rows: [],
+                totalPages: 0,
+                totalRecords: 0
+            }
+        }
+        const rules = {
+            name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+        }
         return {
+            dialogVisible: false,
+            RECORD_EMPTY,
+            loading: true,
+            query,
+            record,
+            result,
+            router,
+            rules,
             userStore: useUserStore()
         }
     },
     methods: {
         add() {
-            Object.assign(this.form, this.FORM_EMPTY)
+            Object.assign(this.record, this.RECORD_EMPTY)
             this.dialogVisible = true
         },
         del(row: any) {
@@ -103,17 +135,17 @@ export default defineComponent({
                 }).catch(() => { ElMessage.info('删除已取消') })
         },
         edit(row: any) {
-            Object.assign(this.form, row)
-            this.form.rolesId = []
+            Object.assign(this.record, row)
+            this.record.rolesId = []
             for (const id of row.rolesId.split(",")) {
                 if (id)
-                    this.form.rolesId.push(Number(id))
+                    this.record.rolesId.push(Number(id))
             }
             this.dialogVisible = true
         },
         async init() {
             this.loading = true
-            let query = Object.assign({}, this.form, this.query)
+            let query = Object.assign({}, this.record, this.query)
             let result = await systemApi.getManagerList(query)
             this.result = result
             this.loading = false
@@ -121,10 +153,10 @@ export default defineComponent({
         submit() {
             this.formRef.validate((valid: boolean) => {
                 if (!valid) return
-                let data: any = Object.assign({}, this.FORM_EMPTY)
-                objAssign(data, this.form)
+                let data: any = Object.assign({}, this.RECORD_EMPTY)
+                objAssign(data, this.record)
                 data.rolesId = ''
-                for (const id of this.form.rolesId) data.rolesId += id + ','
+                for (const id of this.record.rolesId) data.rolesId += id + ','
                 const save = data.userId == null ? systemApi.addManager : systemApi.editManager
                 const msg = data.userId == null ? '新建' : '修改'
                 save(data).then(() => {
@@ -145,43 +177,11 @@ export default defineComponent({
         this.init()
     },
     setup() {
-        const router = useRouter()
-        const FORM_EMPTY = {
-            id: null,
-            userId: null,
-            name: '',
-            trueName: '',
-            rolesId: [] as any[],
-            enable: true,
-        }
-        const form = reactive(Object.assign({}, FORM_EMPTY))
-        const query = reactive({
-            page: 1,
-            pageSize: 20
-        })
-        const result: any = {
-            data: {
-                rows: [],
-                totalPages: 0,
-                totalRecords: 0
-            }
-        }
-        const rules = reactive<FormRules>({
-            name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        })
         return {
             Delete,
             Edit,
             Memo,
-            dialogVisible: ref(false),
-            form,
-            FORM_EMPTY,
             formRef: null as any,
-            loading: ref(true),
-            query,
-            result,
-            router,
-            rules
         }
     },
     watch: {

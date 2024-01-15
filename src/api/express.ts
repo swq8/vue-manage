@@ -36,9 +36,9 @@ export default ({
             data
         })
     },
-    getFreeRuleInfo: () => {
+    getFreeRule: () => {
         return request({
-            url: '/express/freeRule/info',
+            url: '/express/freeRule/get',
             method: 'post'
         })
     },
@@ -49,9 +49,9 @@ export default ({
             data
         })
     },
-    getFeeRuleInfo: () => {
+    getFeeRule: () => {
         return request({
-            url: '/express/feeRule/info',
+            url: '/express/feeRule/get',
             method: 'post'
         })
     },

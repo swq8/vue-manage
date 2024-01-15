@@ -82,9 +82,9 @@ export default ({
             data
         })
     },
-    getGoodsInfo: (data: object) => {
+    getGoods: (data: object) => {
         return request({
-            url: '/goods/goods/info',
+            url: '/goods/goods/get',
             method: 'post',
             data
         })

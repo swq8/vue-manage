@@ -1,18 +1,32 @@
 <template>
-    <el-dialog v-model="dialogVisible" title="用户详情" width="760">
+    <el-dialog v-model="detailVisible" title="用户详情" width="1060">
 
-        <el-descriptions border :column="2">
-            <el-descriptions-item label="时间">{{ record.time }}</el-descriptions-item>
-            <el-descriptions-item label="用户">{{ record.name }}</el-descriptions-item>
-            <el-descriptions-item label="ip">{{ record.ip }}</el-descriptions-item>
-            <el-descriptions-item label="操作">{{ record.title }}</el-descriptions-item>
-            <el-descriptions-item label="内容">
-                <el-input v-model="record.content" :rows="5" type="textarea" readonly />
-            </el-descriptions-item>
+        <el-descriptions border :column="4">
+            <el-descriptions-item label="ID">{{ record.id }}</el-descriptions-item>
+            <el-descriptions-item label="账号">{{ record.name }}</el-descriptions-item>
+            <el-descriptions-item label="状态">{{ record.statusStr }}</el-descriptions-item>
+            <el-descriptions-item label="余额">{{ record.balanceStr }}</el-descriptions-item>
+            <el-descriptions-item label="用户级别">{{ record.level }}</el-descriptions-item>
+            <el-descriptions-item label="性别">{{ record.genderStr }}</el-descriptions-item>
+            <el-descriptions-item label="电话">{{ record.phone }}</el-descriptions-item>
+            <el-descriptions-item label="邮箱">{{ record.email }}</el-descriptions-item>
+            <el-descriptions-item label="注册时间">{{ record.registerTime }}</el-descriptions-item>
+            <el-descriptions-item label="注册IP">{{ record.registerIp }}</el-descriptions-item>
+            <el-descriptions-item label="最近登录">{{ record.lastLoginTime }}</el-descriptions-item>
+            <el-descriptions-item label="最近登录IP">{{ record.lastLoginIp }}</el-descriptions-item>
         </el-descriptions>
+        <br>
+        <el-table border :data="record.address">
+            <el-table-column label="收货地址" >
+                <template #default="scope">
+                    {{ `${scope.row.regionStr} ${scope.row.address} ${scope.row.consignee} ${scope.row.phone} ` }}
+                    </template>
+
+            </el-table-column>
+        </el-table>
         <template #footer>
             <span class="dialog-footer">
-                <el-button type="primary" @click="dialogVisible = false">确定</el-button>
+                <el-button type="primary" @click="detailVisible = false">确定</el-button>
             </span>
         </template>
     </el-dialog>
@@ -117,7 +131,7 @@ import { useUserStore } from '@/stores/user'
 import { ElMessage } from 'element-plus'
 import mainApi from '@/api/main'
 import JSEncrypt from 'jsencrypt'
-import { objAssign, priceFormat } from '@/utils'
+import { priceFormat } from '@/utils'
 import * as math from 'mathjs'
 
 export default defineComponent({
@@ -135,6 +149,7 @@ export default defineComponent({
             }
         }
         const record = {
+            address: [] as any,
             id: 0,
             content: '',
             ip: '',
@@ -161,7 +176,7 @@ export default defineComponent({
                 checkPass: '',
                 visible: false
             },
-            dialogVisible: ref(false),
+            detailVisible: ref(false),
             loading: ref(true),
             query,
             queryForm,
@@ -221,8 +236,12 @@ export default defineComponent({
             this.loading = false
         },
         show(row: any) {
-            Object.assign(this.record, row)
-            this.dialogVisible = true
+            userApi.getUser(row).then((result) => {
+                Object.assign(this.record, result.data.record)
+                this.record.address.length = 0
+                Object.assign(this.record.address, result.data.address)
+                this.detailVisible = true
+            })
         },
         showBalanceDialog(row: any) {
             Object.assign(this.record, row)

@@ -150,10 +150,24 @@
     <el-row justify="start">
         <el-button type="primary" plain @click="add" v-if="userStore.hasAuthorize('/goods/goods/add')">新建</el-button>
     </el-row><br>
-    <el-table v-loading="loading" :data="result.data.rows" style="width: 100%; margin-bottom: 20px" row-key="id" border
+    <el-table v-loading="loading" :data="result.data.rows" style="width: 100%; margin-bottom: 20px" row-key="id"
         default-expand-all>
         <el-table-column prop="id" label="id" width="90" />
-        <el-table-column prop="name" label="名称" />
+        <el-table-column prop="img" label="图片" width="100">
+            <template #default="scope">
+                <div class="icon-1">
+                    <img :src="scope.row.img">
+                </div>
+            </template>
+
+        </el-table-column>
+        <el-table-column label="类别/名称" >
+            <template #default="scope">
+                <el-text type="info">{{ scope.row.cateName }}</el-text><br>
+                {{ scope.row.name }}<br>
+                </template>
+
+            </el-table-column>
         <el-table-column prop="priceStr" label="价格" width="100" />
 
         <el-table-column prop="address" label="操作" width="120">
@@ -282,7 +296,7 @@ export default defineComponent({
         },
         edit(row: any) {
 
-            goodsApi.getGoodsInfo({ id: row.id }).then(result => {
+            goodsApi.getGoods({ id: row.id }).then(result => {
                 let record = JSON.parse(JSON.stringify(result.data.goods))
                 record = JSON.parse(JSON.stringify(result.data.goods))
                 record.brandNewSpec = false
@@ -526,6 +540,14 @@ div.icon {
 
     p {
         margin: 0.1em 0 0.8em 0;
+    }
+}
+
+div.icon-1 {
+    img {
+        border: #d6d8db 1px solid;
+        height: 80px;
+        width: 80px;
     }
 }
 

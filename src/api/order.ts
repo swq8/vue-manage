@@ -22,9 +22,9 @@ export default ({
             data
         })
     },
-    getOrderInfo: (data: object) => {
+    getOrder: (data: object) => {
         return request({
-            url: '/order/order/info',
+            url: '/order/order/get',
             method: 'post',
             data
         })

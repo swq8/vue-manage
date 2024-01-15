@@ -23,11 +23,12 @@ export default ({
             data
         })
     },
-    
-    getUserInfo: () => {
+
+    getUser: (data: object) => {
         return request({
-            url: '/user/user/info',
-            method: 'post'
+            url: '/user/user/get',
+            method: 'post',
+            data
         })
     },
 

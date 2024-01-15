@@ -19,7 +19,7 @@ export default ({
 
     getSystemInfo: () => {
         return request({
-            url: '/system/info',
+            url: '/system/info/get',
             method: 'post'
         })
     },
@@ -103,9 +103,9 @@ export default ({
             data
         })
     },
-    getPaymentInfo: (data: object) => {
+    getPayment: (data: object) => {
         return request({
-            url: '/system/payment/info',
+            url: '/system/payment/get',
             method: 'post',
             data
         })

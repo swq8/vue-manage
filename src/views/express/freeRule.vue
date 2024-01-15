@@ -49,7 +49,7 @@ export default defineComponent({
     methods: {
         async init() {
             this.loading = true
-            let result = await expressApi.getFreeRuleInfo()
+            let result = await expressApi.getFreeRule()
             Object.assign(this.record, result.data.record)
             this.record.amount = Number(priceFormat(this.record.amount))
             Object.assign(this.provinces, result.data.provinces)
