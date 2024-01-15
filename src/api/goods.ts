@@ -133,4 +133,25 @@ export default ({
             data
         })
     },
+    editTemplate: (data: object) => {
+        return request({
+            url: '/goods/template/edit',
+            method: 'post',
+            data
+        })
+    },
+    getTemplate: () => {
+        return request({
+            url: '/goods/template/get',
+            method: 'post'
+        })
+    },
+    uploadTemplateImg: (data: object) => {
+        return request({
+            url: '/goods/template/upload',
+            method: 'post',
+            data
+        })
+    },
+    
 })

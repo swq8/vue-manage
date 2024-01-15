@@ -196,7 +196,7 @@ export default defineComponent({
 
       .form {
         width: 80%;
-        margin: 50px auto 15px;
+        margin: 40px auto 15px;
 
         .el-input {
           margin-bottom: 20px;
@@ -224,27 +224,39 @@ export default defineComponent({
 
   .box {
     width: 500px !important;
+    height: 320px !important;
+
+    .box-inner {
+      h1 {
+        margin: 1em auto 0 !important;
+      }
+
+    }
   }
 }
 
 @media screen and (max-width: 750px) {
 
-  .container .box,
-  .container .box-inner {
-    width: 100vw !important;
-    height: 100vh;
-    box-shadow: none;
-    left: 0;
-    top: 0;
-    transform: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  .container .box {
+    height: 320px;
+    width: 90vw !important;
+    top: 40%;
 
-    h1 {
-      margin-top: 0;
+    .box-inner {
+      box-shadow: none;
+      left: 5vw;
+      top: 20%;
+      transform: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h1 {
+        margin-top: 0;
+      }
     }
   }
+
 }
 </style>

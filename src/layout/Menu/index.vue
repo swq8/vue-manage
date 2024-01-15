@@ -49,8 +49,9 @@ export default defineComponent({
 }
 
 .layout-menu {
-  width: 100%;
   border: none;
+  padding-bottom: 6em;
+  width: 100%;
 
   &.collapse {
     margin-left: 0px;
