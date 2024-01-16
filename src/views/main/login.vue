@@ -10,7 +10,7 @@
       </div>
 
       <div class="box-inner" v-loading="formLoading">
-        <h1>欢迎登录</h1>
+        <h2>欢迎登录</h2>
         <el-form class="form">
           <el-input size="large" v-model="form.name" placeholder="用户名" type="text" maxlength="50">
             <template #prepend>
@@ -143,6 +143,7 @@ export default defineComponent({
   }
 
   .box {
+    align-items: center;
     width: 1160px;
     display: flex;
     position: absolute;
@@ -188,12 +189,7 @@ export default defineComponent({
 
     .box-inner {
       width: 500px;
-
-      h1 {
-        margin-top: 80px;
-        text-align: center;
-      }
-
+ 
       .form {
         width: 80%;
         margin: 40px auto 15px;
@@ -224,38 +220,14 @@ export default defineComponent({
 
   .box {
     width: 500px !important;
-    height: 320px !important;
-
-    .box-inner {
-      h1 {
-        margin: 1em auto 0 !important;
-      }
-
-    }
+    max-width: 500px;
+    height: 330px !important;
   }
 }
 
 @media screen and (max-width: 750px) {
-
   .container .box {
-    height: 320px;
     width: 90vw !important;
-    top: 40%;
-
-    .box-inner {
-      box-shadow: none;
-      left: 5vw;
-      top: 20%;
-      transform: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      h1 {
-        margin-top: 0;
-      }
-    }
   }
 
 }
