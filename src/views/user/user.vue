@@ -17,10 +17,10 @@
         </el-descriptions>
         <br>
         <el-table border :data="record.address">
-            <el-table-column label="收货地址" >
+            <el-table-column label="收货地址">
                 <template #default="scope">
                     {{ `${scope.row.regionStr} ${scope.row.address} ${scope.row.consignee} ${scope.row.phone} ` }}
-                    </template>
+                </template>
 
             </el-table-column>
         </el-table>
@@ -69,6 +69,7 @@
                 <el-input v-model="passwordDialog.checkPass" type="password" autocomplete="off" />
             </el-form-item>
         </el-form>
+        <el-text type="danger">注意：</el-text>更改密码会注销该用户所有客户端的登录状态
         <template #footer>
             <span class="dialog-footer">
                 <el-button @click="passwordDialog.visible = false">取消</el-button>
