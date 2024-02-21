@@ -137,7 +137,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="queryForm.status" clearable style="width:90%">
+                <el-select v-model="queryForm.onSell" clearable>
                     <el-option :value="true" label="上架" />
                     <el-option :value="false" label="下架" />
                 </el-select>
@@ -161,13 +161,13 @@
             </template>
 
         </el-table-column>
-        <el-table-column label="类别/名称" >
+        <el-table-column label="类别/名称">
             <template #default="scope">
                 <el-text type="info">{{ scope.row.cateName }}</el-text><br>
                 {{ scope.row.name }}<br>
-                </template>
+            </template>
 
-            </el-table-column>
+        </el-table-column>
         <el-table-column prop="priceStr" label="价格" width="100" />
 
         <el-table-column prop="address" label="操作" width="120">
@@ -260,7 +260,7 @@ export default defineComponent({
             cateId: undefined,
             name: '',
             shippingFee: undefined,
-            status: undefined,
+            onSell: undefined,
         }
         const route = useRoute()
         Object.assign(queryForm, route.query)

@@ -18,7 +18,7 @@
 #### 主要技术栈
 
 - MVVM框架：vue v3
-- 工程化管理：vite v2
+- 工程化管理：vite v5
 - UI框架：element-plus
 - 路由管理：vue-router v4
 - 状态管理：pinia
