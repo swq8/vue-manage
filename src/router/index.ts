@@ -75,8 +75,9 @@ router.beforeEach(async (to, _from, next) => {
         installed.push(router.addRoute(item))
       }
       needLoad = false
+      console.log(appStore.currentPath)
       // go to homepage after loaded
-      if (appStore.currentPath === '/login') router.replace('/home')
+      if (['', '/', '/login'].includes(appStore.currentPath)) router.replace('/home')
       else router.replace(appStore.currentPath)
     }
 
@@ -84,11 +85,6 @@ router.beforeEach(async (to, _from, next) => {
 
   NProgress.start();
   if (userStore.name.length > 0) {
-    to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
-    if (to.path === '/login') {
-      next('/home')
-      return
-    }
     next()
   } else if (whiteList.includes(to.path)) {
     to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
