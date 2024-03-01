@@ -86,7 +86,7 @@ router.beforeEach(async (to, _from, next) => {
   if (userStore.name.length > 0) {
     to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
     if (to.path === '/login') {
-      next('/')
+      next('/home')
       return
     }
     next()
@@ -100,7 +100,7 @@ router.beforeEach(async (to, _from, next) => {
 });
 
 // 路由跳转后的监听操作
-router.afterEach((to: RouteLocationNormalized, _from) => {
+router.afterEach((to: RouteLocationNormalized | any, _from) => {
   const userStore = useUserStore()
   const name = to.matched[to.matched.length - 1].components.default.name
   if (to.meta && to.meta.cache && name && !userStore.cachedComponents.includes(name)) {
