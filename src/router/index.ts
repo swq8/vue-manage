@@ -83,15 +83,14 @@ router.beforeEach(async (to, _from, next) => {
 
   }
 
-  NProgress.start();
+  NProgress.start()
+  to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
   if (userStore.name.length > 0) {
     next()
   } else if (whiteList.includes(to.path)) {
-    to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
     next()
   } else {
     next("/login"); // 全部重定向到登录页
-    to.meta.title ? (changeTitle(to.meta.title)) : "" // 动态title
   }
 });
 
