@@ -12,9 +12,9 @@
                 <el-col :span="12">
                     <el-form-item label="类型" required>
                         <el-radio-group v-model="form.type">
-                            <el-radio :label="1">目录</el-radio>
-                            <el-radio :label="2">菜单</el-radio>
-                            <el-radio :label="3">按钮</el-radio>
+                            <el-radio :value="1">目录</el-radio>
+                            <el-radio :value="2">菜单</el-radio>
+                            <el-radio :value="3">按钮</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>
@@ -48,24 +48,24 @@
                 <el-col :span="12" v-if="form.type == 2">
                     <el-form-item label="是否缓存" required>
                         <el-radio-group v-model="form.cache" style="width:218px">
-                            <el-radio :label="true">缓存</el-radio>
-                            <el-radio :label="false">不缓存</el-radio>
+                            <el-radio :value="true">缓存</el-radio>
+                            <el-radio :value="false">不缓存</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12" v-if="form.type < 3">
                     <el-form-item label="显示状态" required>
                         <el-radio-group v-model="form.visible" style="width:218px">
-                            <el-radio :label="true">显示</el-radio>
-                            <el-radio :label="false">隐藏</el-radio>
+                            <el-radio :value="true">显示</el-radio>
+                            <el-radio :value="false">隐藏</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="使用状态" required>
                         <el-radio-group v-model="form.enable" style="width:218px">
-                            <el-radio :label="true">启用</el-radio>
-                            <el-radio :label="false">停用</el-radio>
+                            <el-radio :value="true">启用</el-radio>
+                            <el-radio :value="false">停用</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>

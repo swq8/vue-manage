@@ -17,8 +17,8 @@
             </el-form-item>
             <el-form-item label="状态">
                 <el-radio-group v-model="record.enable" style="width: 200px;">
-                    <el-radio :label="true">启用</el-radio>
-                    <el-radio :label="false">停用</el-radio>
+                    <el-radio :value="true">启用</el-radio>
+                    <el-radio :value="false">停用</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label=" " style="width:298px">
@@ -27,8 +27,8 @@
             <template v-if="record.name === 'alipay'">
                 <el-form-item label="环境模式" required style="width: 94%;">
                     <el-radio-group v-model="record.sanBox" style="width: 200px;">
-                        <el-radio :label="false">正式环境</el-radio>
-                        <el-radio :label="true">沙箱模式</el-radio>
+                        <el-radio :value="false">正式环境</el-radio>
+                        <el-radio :value="true">沙箱模式</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="App ID" required style="width: 94%;">

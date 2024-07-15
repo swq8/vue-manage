@@ -14,8 +14,8 @@
 
                     <el-form-item label="使用状态" required>
                         <el-radio-group v-model="form.enable" style="width:328px">
-                            <el-radio :label="true">启用</el-radio>
-                            <el-radio :label="false">停用</el-radio>
+                            <el-radio :value="true">启用</el-radio>
+                            <el-radio :value="false">停用</el-radio>
                         </el-radio-group>
                     </el-form-item>
 

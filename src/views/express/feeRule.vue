@@ -20,8 +20,8 @@
             </el-form-item>
             <el-form-item label="其他地区默认运费">
                 <el-radio-group v-model="record.otherDefault">
-                    <el-radio :label="true">开启</el-radio>
-                    <el-radio :label="false">关闭</el-radio>
+                    <el-radio :value="true">开启</el-radio>
+                    <el-radio :value="false">关闭</el-radio>
                 </el-radio-group>
             </el-form-item>
             <br>

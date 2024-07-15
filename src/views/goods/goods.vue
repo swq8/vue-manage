@@ -44,14 +44,14 @@
                 </el-form-item>
                 <el-form-item label="快递费用" required style="width: 46%;">
                     <el-radio-group v-model="record.shippingFee">
-                        <el-radio :label="true">有</el-radio>
-                        <el-radio :label="false">无</el-radio>
+                        <el-radio :value="true">有</el-radio>
+                        <el-radio :value="false">无</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="商品状态" required style="width: 46%;">
                     <el-radio-group v-model="record.onSell">
-                        <el-radio :label="true">正常</el-radio>
-                        <el-radio :label="false">下架</el-radio>
+                        <el-radio :value="true">正常</el-radio>
+                        <el-radio :value="false">下架</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-row>

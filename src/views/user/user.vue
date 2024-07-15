@@ -63,10 +63,10 @@
                 <el-input v-model="record.name" type="text" disabled />
             </el-form-item>
             <el-form-item label="密码" required>
-                <el-input v-model="passwordDialog.pass" type="password" autocomplete="off" />
+                <el-input v-model="passwordDialog.pwd" type="password" autocomplete="off" />
             </el-form-item>
             <el-form-item label="重复密码" required>
-                <el-input v-model="passwordDialog.checkPass" type="password" autocomplete="off" />
+                <el-input v-model="passwordDialog.checkPwd" type="password" autocomplete="off" />
             </el-form-item>
         </el-form>
         <el-text type="danger">注意：</el-text>更改密码会注销该用户所有客户端的登录状态
@@ -173,8 +173,8 @@ export default defineComponent({
             },
             passwordDialog: {
                 loading: false,
-                pass: '',
-                checkPass: '',
+                pwd: '',
+                checkPwd: '',
                 visible: false
             },
             detailVisible: ref(false),
@@ -204,7 +204,7 @@ export default defineComponent({
 
         },
         async changePassword() {
-            if (this.passwordDialog.pass != this.passwordDialog.checkPass) {
+            if (this.passwordDialog.pwd != this.passwordDialog.checkPwd) {
                 ElMessage.error('两次密码不一致')
                 return
             }
@@ -218,7 +218,7 @@ export default defineComponent({
             }
             let jsencrypt = new JSEncrypt()
             jsencrypt.setPublicKey(rsaPubKey)
-            let data = { id: this.record.id, pass: jsencrypt.encrypt(this.passwordDialog.pass) }
+            let data = { id: this.record.id, pwd: jsencrypt.encrypt(this.passwordDialog.pwd) }
             userApi.changePassword(data).then(() => {
                 ElMessage.success("密码更改完成")
                 this.passwordDialog.visible = false
@@ -254,13 +254,18 @@ export default defineComponent({
         showPasswordDialog(row: any) {
             Object.assign(this.record, row)
             this.passwordDialog.loading = false
-            this.passwordDialog.pass = ''
-            this.passwordDialog.checkPass = ''
+            this.passwordDialog.pwd = ''
+            this.passwordDialog.checkPwd = ''
             this.passwordDialog.visible = true
         },
         sortChange(param: any) {
-            if (param.order == null) this.query.sort = ""
-            else this.query.sort = param.prop + ',' + (param.order[0] == 'a' ? 'asc' : 'desc')
+            if (param.order == null) {
+                this.query.sort = ""
+                return
+            }
+            let n = param.prop
+            if (n.endsWith("Str")) n = n.substring(0, n.length - 3)
+            this.query.sort = n + ',' + (param.order[0] == 'a' ? 'asc' : 'desc')
         },
         submit() {
             if (this.query.page !== 1) this.query.page = 1

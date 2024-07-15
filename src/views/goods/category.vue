@@ -24,16 +24,16 @@
                 <el-col :span="12">
                     <el-form-item label="显示状态" required>
                         <el-radio-group v-model="form.visibility" style="width:218px">
-                            <el-radio :label="true">显示</el-radio>
-                            <el-radio :label="false">隐藏</el-radio>
+                            <el-radio :value="true">显示</el-radio>
+                            <el-radio :value="false">隐藏</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
                     <el-form-item label="首页推荐" required>
                         <el-radio-group v-model="form.homepage" style="width:218px">
-                            <el-radio :label="true">启用</el-radio>
-                            <el-radio :label="false">停用</el-radio>
+                            <el-radio :value="true">启用</el-radio>
+                            <el-radio :value="false">停用</el-radio>
                         </el-radio-group>
                     </el-form-item>
                 </el-col>

@@ -11,7 +11,7 @@
         </el-form>
     </el-row>
     <el-table v-loading="loading" :data="result.data.rows" style="width: 100%; margin-bottom: 20px" row-key="id" border
-    @sort-change="sortAmount">
+    @sort-change="sortChange">
         <el-table-column prop="time" label="时间" width="160" sortable="custom" />
         <el-table-column prop="name" label="用户" />
         <el-table-column prop="amountStr" label="变动" sortable="custom" />
@@ -79,7 +79,7 @@ export default defineComponent({
             Object.assign(this.result, result)
             this.loading = false
         },
-        sortAmount(param: any) {
+        sortChange(param: any) {
             if (param.order == null) {
                 this.query.sort = ""
                 return

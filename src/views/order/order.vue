@@ -362,10 +362,14 @@ export default defineComponent({
                 this.infoDialog.loading = false
             })
         },
-
         sortChange(param: any) {
-            if (param.order == null) this.query.sort = ""
-            else this.query.sort = param.prop + ',' + (param.order[0] == 'a' ? 'asc' : 'desc')
+            if (param.order == null) {
+                this.query.sort = ""
+                return
+            }
+            let n = param.prop
+            if (n.endsWith("Str")) n = n.substring(0, n.length - 3)
+            this.query.sort = n + ',' + (param.order[0] == 'a' ? 'asc' : 'desc')
         },
         submit() {
             if (this.query.page !== 1) this.query.page = 1

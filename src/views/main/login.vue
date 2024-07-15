@@ -19,7 +19,7 @@
               </el-icon>
             </template>
           </el-input>
-          <el-input size="large" ref="password" v-model="form.pass" :type="passwordType" placeholder="密码" name="password"
+          <el-input size="large" ref="password" v-model="form.pwd" :type="passwordType" placeholder="密码" name="password"
             maxlength="50" @keydown.enter="submit">
             <template #prepend>
               <el-icon>
@@ -59,7 +59,7 @@ export default defineComponent({
   data() {
     const form = {
       name: 'demo',
-      pass: 'demodemo'
+      pwd: 'demodemo'
     }
     return {
       loginLeftPng,
@@ -80,7 +80,7 @@ export default defineComponent({
           ElMessage.warning('账号不能为空')
           return;
         }
-        if (this.form.pass === '') {
+        if (this.form.pwd === '') {
           ElMessage.warning('密码不能为空')
           return;
         }
@@ -105,7 +105,7 @@ export default defineComponent({
           }
           let jsencrypt = new JSEncrypt()
           jsencrypt.setPublicKey(rsaPubKey)
-          let passEnc = jsencrypt.encrypt(this.form.pass)
+          let passEnc = jsencrypt.encrypt(this.form.pwd)
           if (passEnc == false) {
             ElMessage.error('jsencrypt error')
             this.formLoading = false
@@ -113,7 +113,7 @@ export default defineComponent({
           }
           let params: GeneralDto = {
             name: this.form.name,
-            pass: passEnc
+            pwd: passEnc
           }
           this.userStore.login(params)
             .then(() => {

@@ -22,8 +22,8 @@
 
                 <el-form-item label="状态" required style="width: 46%;">
                     <el-radio-group v-model="record.visible">
-                        <el-radio :label="true">显示</el-radio>
-                        <el-radio :label="false">隐藏</el-radio>
+                        <el-radio :value="true">显示</el-radio>
+                        <el-radio :value="false">隐藏</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-row>
@@ -57,7 +57,8 @@
         </el-form>
     </el-row>
     <el-row justify="start">
-        <el-button type="primary" plain @click="add" v-if="userStore.hasAuthorize('/article/article/add')">新建</el-button>
+        <el-button type="primary" plain @click="add"
+            v-if="userStore.hasAuthorize('/article/article/add')">新建</el-button>
     </el-row><br>
     <el-table v-loading="loading" :data="result.data.rows" style="width: 100%; margin-bottom: 20px" row-key="id" border
         default-expand-all>

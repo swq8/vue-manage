@@ -75,7 +75,6 @@ router.beforeEach(async (to, _from, next) => {
         installed.push(router.addRoute(item))
       }
       needLoad = false
-      console.log(appStore.currentPath)
       // go to homepage after loaded
       if (['', '/', '/login'].includes(appStore.currentPath)) router.replace('/home')
       else router.replace(appStore.currentPath)

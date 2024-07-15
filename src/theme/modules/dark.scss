@@ -5,10 +5,10 @@
   }
   .el-tree {
     background-color: var(--system-page-background);
+    --el-color-primary-light-9: #272727;
     .el-tree-node__content:hover {
       background-color: #272727;
     }
-    --el-color-primary-light-9: #272727;
   }
   .el-card {
     background-color: var(--system-page-background);
