@@ -38,7 +38,7 @@
                 <el-input v-model="record.name" type="text" disabled />
             </el-form-item>
             <el-form-item label="余额">
-                <el-input v-model="record.balanceStr" type="text" disabled />
+                <el-input v-model="record.balance" type="text" disabled />
             </el-form-item>
             <el-form-item label="调整值" required>
                 <el-input-number :controls="false" v-model="balanceDialog.change" :precision="2" />
@@ -93,7 +93,7 @@
         default-expand-all @sort-change="sortChange">
         <el-table-column prop="id" label="id" sortable="custom" width="80" />
         <el-table-column prop="name" label="账号" sortable="custom" />
-        <el-table-column prop="balanceStr" label="余额" sortable="custom" />
+        <el-table-column prop="balance" label="余额" sortable="custom" />
         <el-table-column prop="lastLoginTime" label="最近登录时间" sortable="custom" />
         <el-table-column prop="lastLoginIp" label="最近登录IP" />
         <el-table-column prop="registerTime" label="注册时间" />
@@ -132,7 +132,6 @@ import { useUserStore } from '@/stores/user'
 import { ElMessage } from 'element-plus'
 import mainApi from '@/api/main'
 import JSEncrypt from 'jsencrypt'
-import { priceFormat } from '@/utils'
 import * as math from 'mathjs'
 
 export default defineComponent({
@@ -191,7 +190,7 @@ export default defineComponent({
         async changeBalance() {
             let data = {
                 uid: this.record.id,
-                amount: parseInt(math.multiply(math.bignumber(this.balanceDialog.change), math.bignumber(100)).toString()),
+                amount: this.balanceDialog.change,
                 note: this.balanceDialog.note
             }
             userApi.changeBalance(data).then(() => {
@@ -232,7 +231,7 @@ export default defineComponent({
             let result = await userApi.getUserList(query)
             Object.assign(this.result, result)
             this.result.data.rows.forEach((item: any) => {
-                item.balanceStr = priceFormat(item.balance)
+                item.balance = item.balance.toFixed(2)
             })
             this.loading = false
         },
@@ -264,7 +263,6 @@ export default defineComponent({
                 return
             }
             let n = param.prop
-            if (n.endsWith("Str")) n = n.substring(0, n.length - 3)
             this.query.sort = n + ',' + (param.order[0] == 'a' ? 'asc' : 'desc')
         },
         submit() {

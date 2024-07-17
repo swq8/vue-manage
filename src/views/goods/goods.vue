@@ -71,7 +71,7 @@
                     <tbody>
                         <tr v-if="specTableNames.length == 0">
                             <td><el-input-number :controls="false" size="small" v-model="record.price" :precision="2"
-                                    :step="0.1" :min="0" /></td>
+                                    :step="0.01" :min="0" /></td>
                             <td><el-input-number :controls="false" size="small" v-model="record.stock" :min="0" /></td>
                             <td><el-input-number :controls="false" size="small" v-model="record.weight" :min="0" /></td>
                         </tr>
@@ -81,7 +81,7 @@
                                 <span v-text="item1.val"></span>
                             </td>
                             <td><el-input-number :controls="false" size="small" v-model="record.specProps[index].price"
-                                    :precision="2" :step="0.1" :min="0" /></td>
+                                    :precision="2" :step="0.01" :min="0" /></td>
                             <td><el-input-number :controls="false" size="small" v-model="record.specProps[index].stock"
                                     :min="0" /></td>
                             <td><el-input-number :controls="false" size="small" v-model="record.specProps[index].weight"
@@ -116,6 +116,7 @@
     </el-dialog>
     <!---------------------------- goods dialog end -------------------------------------------------------->
 
+    <!---------------------------- goods list start -------------------------------------------------------->
     <el-row justify="start">
         <el-form inline label-position="left" style="text-align:left">
             <el-form-item label="名称">
@@ -168,7 +169,7 @@
             </template>
 
         </el-table-column>
-        <el-table-column prop="priceStr" label="价格" width="100" />
+        <el-table-column prop="price" label="价格" width="100" />
 
         <el-table-column prop="address" label="操作" width="120">
             <template #default="scope">
@@ -300,10 +301,6 @@ export default defineComponent({
                 let record = JSON.parse(JSON.stringify(result.data.goods))
                 record = JSON.parse(JSON.stringify(result.data.goods))
                 record.brandNewSpec = false
-                record.price = Number(priceFormat(record.price))
-                record.specProps.forEach((item: any) => {
-                    item.price = Number(priceFormat(item.price))
-                })
                 this.record = record
                 this.dialogVisible = true
             })
@@ -331,7 +328,7 @@ export default defineComponent({
             let result = await goodsApi.getGoodsList(query)
             Object.assign(this.result, result)
             this.result.data.rows.forEach((item: any) => {
-                item.priceStr = priceFormat(item.price)
+                item.price = item.price.toFixed(2)
             })
             this.brandList = result.data.brandList
             this.categoryList.length = 0
@@ -377,11 +374,9 @@ export default defineComponent({
                 delete data.updateTime
                 if (Array.isArray(data.cateId)) data.cateId = data.cateId[data.cateId.length - 1]
                 if (data.specObj.length == 0) data.brandNewSpec = true
-                data.price = priceToNumber(data.price)
                 data.specProps.forEach((item: any) => {
                     delete item.des
                     if (data.brandNewSpec) item.id = null
-                    item.price = priceToNumber(item.price)
                 })
                 let save = this.record.id == null ? goodsApi.addGoods : goodsApi.editGoods
                 save(data).then(() => {

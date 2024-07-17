@@ -11,11 +11,11 @@
         </el-form>
     </el-row>
     <el-table v-loading="loading" :data="result.data.rows" style="width: 100%; margin-bottom: 20px" row-key="id" border
-    @sort-change="sortChange">
+        @sort-change="sortChange">
         <el-table-column prop="time" label="时间" width="160" sortable="custom" />
         <el-table-column prop="name" label="用户" />
-        <el-table-column prop="amountStr" label="变动" sortable="custom" />
-        <el-table-column prop="balanceStr" label="变动后余额" sortable="custom" />
+        <el-table-column prop="amount" label="变动" sortable="custom" />
+        <el-table-column prop="balance" label="变动后余额" sortable="custom" />
         <el-table-column prop="note" label="备注" />
     </el-table>
 
@@ -76,6 +76,12 @@ export default defineComponent({
             this.loading = true
             let query = Object.assign({}, this.queryForm, this.query)
             let result = await userApi.getBalanceLogList(query)
+
+            result.data.rows.forEach((item: any) => {
+                item.amount = item.amount.toFixed(2)
+                if (item.amount > 0) item.amount = "+" + item.amount
+                item.balance = item.balance.toFixed(2)
+            })
             Object.assign(this.result, result)
             this.loading = false
         },
@@ -85,7 +91,6 @@ export default defineComponent({
                 return
             }
             let n = param.prop
-            if (n.endsWith("Str")) n = n.substring(0, n.length - 3)
             this.query.sort = n + ',' + (param.order[0] == 'a' ? 'asc' : 'desc')
         },
         submit() {

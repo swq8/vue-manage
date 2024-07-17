@@ -90,8 +90,7 @@
         <el-card>
             <template #header>前端加密</template>
             <el-row>
-                <el-text>RSA密钥对在数据库(table:t_system)中修改，点击保存后生效;
-                    密钥内容中不能有换行符或 '----' 开头的注释语句。
+                <el-text>RSA密钥对请在数据库中修改(table:t_system，entity:sys, attribute: [rsaPrivateKey, rsaPublicKey])，点击当前页面保存按钮后立即生效。
                 </el-text>
             </el-row>
         </el-card><br>

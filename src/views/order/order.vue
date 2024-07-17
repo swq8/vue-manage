@@ -4,16 +4,17 @@
         <div v-loading="infoDialog.loading">
             <el-descriptions border :column="4">
                 <el-descriptions-item label="订单号">{{ record.no }}</el-descriptions-item>
-                <el-descriptions-item label="订单金额">{{ record.amountStr }}</el-descriptions-item>
+                <el-descriptions-item label="订单金额">{{ record.amount }}</el-descriptions-item>
                 <el-descriptions-item label="下单时间">{{ record.createTime }}</el-descriptions-item>
                 <el-descriptions-item label="订单状态">{{ record.statusName }}</el-descriptions-item>
-                <el-descriptions-item label="付款时间">{{ record.payTime }}</el-descriptions-item>
                 <el-descriptions-item label="快递公司">{{ record.expressName }}</el-descriptions-item>
+                <el-descriptions-item label="物流费用">{{ record.shippingFee }}</el-descriptions-item>
                 <el-descriptions-item label="快递单号">{{ record.expressNo }}</el-descriptions-item>
                 <el-descriptions-item label="发货时间">{{ record.shippingTime }}</el-descriptions-item>
+                <el-descriptions-item label="付款时间">{{ record.payTime }}</el-descriptions-item>
                 <el-descriptions-item label="付款方式">{{ record.payNameCn }}</el-descriptions-item>
-                <el-descriptions-item label="付款金额">{{ record.payAmountStr }}</el-descriptions-item>
-                <el-descriptions-item label="余额支付">{{ record.payBalanceStr }}</el-descriptions-item>
+                <el-descriptions-item label="付款金额">{{ record.payAmount }}</el-descriptions-item>
+                <el-descriptions-item label="余额支付">{{ record.payBalance }}</el-descriptions-item>
             </el-descriptions>
             <el-table :data="record.orderGoods" border>
                 <el-table-column label="商品">
@@ -23,15 +24,15 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="specDes" label="规格" width="100" />
-                <el-table-column prop="priceStr" label="单价" width="90" />
+                <el-table-column prop="price" label="单价" width="90" />
                 <el-table-column prop="num" label="数量" width="60" />
-                <el-table-column prop="sumPriceStr" label="小计" width="100" />
+                <el-table-column prop="sumPrice" label="小计" width="100" />
                 <el-table-column prop="statusStr" label="状态" width="80" />
 
             </el-table>
             <el-descriptions border :column="1" direction="vertical">
                 <el-descriptions-item label="收货地址">{{ record.regionStr + ' ' + record.consignee + ' ' + record.phone
-                }}</el-descriptions-item>
+                    }}</el-descriptions-item>
             </el-descriptions>
         </div>
         <template #footer>
@@ -54,8 +55,8 @@
                 <el-descriptions-item label="快递单号">{{ record.expressNo }}</el-descriptions-item>
                 <el-descriptions-item label="发货时间">{{ record.shippingTime }}</el-descriptions-item>
                 <el-descriptions-item label="付款方式">{{ record.payNameCn }}</el-descriptions-item>
-                <el-descriptions-item label="付款金额">{{ record.payAmountStr }}</el-descriptions-item>
-                <el-descriptions-item label="余额支付">{{ record.payBalanceStr }}</el-descriptions-item>
+                <el-descriptions-item label="付款金额">{{ record.payAmount }}</el-descriptions-item>
+                <el-descriptions-item label="余额支付">{{ record.payBalance }}</el-descriptions-item>
             </el-descriptions>
             <el-table :data="record.orderGoods" border>
                 <el-table-column label="商品">
@@ -65,15 +66,15 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="specDes" label="规格" width="100" />
-                <el-table-column prop="priceStr" label="单价" width="90" />
+                <el-table-column prop="price" label="单价" width="90" />
                 <el-table-column prop="num" label="数量" width="60" />
-                <el-table-column prop="sumPriceStr" label="小计" width="100" />
+                <el-table-column prop="sumPrice" label="小计" width="100" />
                 <el-table-column prop="statusStr" label="状态" width="80" />
 
             </el-table>
             <el-descriptions border :column="1" direction="vertical">
                 <el-descriptions-item label="收货地址">{{ record.regionStr + ' ' + record.consignee + ' ' + record.phone
-                }}</el-descriptions-item>
+                    }}</el-descriptions-item>
             </el-descriptions>
             <el-descriptions border :column="1" direction="vertical">
                 <el-descriptions-item label="退款">
@@ -99,7 +100,7 @@
         <div v-loading="shipgDialog.loading">
             <el-descriptions border :column="2">
                 <el-descriptions-item label="订单号">{{ record.no }}</el-descriptions-item>
-                <el-descriptions-item label="订单金额">{{ record.amountStr }}</el-descriptions-item>
+                <el-descriptions-item label="订单金额">{{ record.amount }}</el-descriptions-item>
                 <el-descriptions-item label="下单时间">{{ record.createTime }}</el-descriptions-item>
                 <el-descriptions-item label="订单状态">{{ record.statusName }}</el-descriptions-item>
                 <el-descriptions-item label="快递">
@@ -150,7 +151,7 @@
         @sort-change="sortChange">
         <el-table-column prop="no" label="订单号" width="140" />
         <el-table-column prop="userName" label="账号" />
-        <el-table-column prop="amountStr" label="订单金额" sortable="custom" />
+        <el-table-column prop="amount" label="订单金额" sortable="custom" />
         <el-table-column prop="consignee" label="收货人" />
         <el-table-column prop="statusName" label="订单状态" width="110" />
         <el-table-column prop="createTime" label="下单时间" sortable="custom" width="160" />
@@ -167,14 +168,17 @@
                                 @click="cancelOrder(scope.row)">取消订单</el-dropdown-item>
                             <el-dropdown-item v-if="scope.row.status == 0 && userStore.hasAuthorize('/order/order/pay')"
                                 @click="pay(scope.row)">支付订单</el-dropdown-item>
-                            <el-dropdown-item v-if="scope.row.status == 1 && userStore.hasAuthorize('/order/order/ship')"
+                            <el-dropdown-item
+                                v-if="scope.row.status == 1 && userStore.hasAuthorize('/order/order/ship')"
                                 @click="showShipgDialog(scope.row)">发货</el-dropdown-item>
                             <el-dropdown-item
                                 v-if="scope.row.status == 2 && userStore.hasAuthorize('/order/order/cancelShip')"
                                 @click="cancelShip(scope.row)">取消发货</el-dropdown-item>
-                            <el-dropdown-item v-if="scope.row.status == 2 && userStore.hasAuthorize('/order/order/confirm')"
+                            <el-dropdown-item
+                                v-if="scope.row.status == 2 && userStore.hasAuthorize('/order/order/confirm')"
                                 @click="confirmOrder(scope.row)">确认收货</el-dropdown-item>
-                            <el-dropdown-item v-if="scope.row.status == 3 && userStore.hasAuthorize('/order/order/refund')"
+                            <el-dropdown-item
+                                v-if="scope.row.status == 3 && userStore.hasAuthorize('/order/order/refund')"
                                 @click="showRefund(scope.row)">退款</el-dropdown-item>
 
                         </el-dropdown-menu>
@@ -258,6 +262,9 @@ export default defineComponent({
             this.loading = true
             let query = Object.assign({}, this.queryForm, this.query)
             let result = await orderApi.getOrderList(query)
+            result.data.rows.forEach((item: any) => {
+                item.amount = item.amount.toFixed(2)
+            })
             Object.assign(this.result, result)
             this.loading = false
         },
@@ -358,6 +365,14 @@ export default defineComponent({
             this.infoDialog.visible = true
             this.infoDialog.loading = true
             orderApi.getOrder({ no: row.no }).then((result: any) => {
+                result.data.order.amount = result.data.order.amount.toFixed(2)
+                result.data.order.shippingFee = result.data.order.shippingFee.toFixed(2)
+                result.data.order.payAmount = result.data.order.payAmount.toFixed(2)
+                result.data.order.payBalance = result.data.order.payBalance.toFixed(2)
+                result.data.order.orderGoods.forEach((item:any)=>{
+                    item.price = item.price.toFixed(2)
+                    item.sumPrice = item.sumPrice.toFixed(2)
+                })
                 this.record = JSON.parse(JSON.stringify(result.data.order))
                 this.infoDialog.loading = false
             })

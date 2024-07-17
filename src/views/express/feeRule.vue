@@ -92,7 +92,6 @@ import { defineComponent, ref } from 'vue'
 import expressApi from '@/api/express'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
-import { priceFormat, priceToNumber } from '@/utils'
 import { Bottom, Delete, Top } from '@element-plus/icons-vue'
 
 export default defineComponent({
@@ -127,12 +126,6 @@ export default defineComponent({
             this.loading = true
             let result = await expressApi.getFeeRule()
             let record = result.data.record
-            record.firstFee = Number(priceFormat(record.firstFee))
-            record.additionalFee = Number(priceFormat(record.additionalFee))
-            record.provinceFees.forEach((item: any) => {
-                item.firstFee = Number(priceFormat(item.firstFee))
-                item.additionalFee = Number(priceFormat(item.additionalFee))
-            });
             Object.assign(this.record, record)
             Object.assign(this.provinces, result.data.provinces)
             this.loading = false
@@ -161,12 +154,6 @@ export default defineComponent({
                 if (!valid) return
                 this.loading = true
                 let postData = JSON.parse(JSON.stringify(this.record))
-                postData.firstFee = priceToNumber(postData.firstFee)
-                postData.additionalFee = priceToNumber(postData.additionalFee)
-                postData.provinceFees.forEach((item: any) => {
-                    item.firstFee = Number(priceToNumber(item.firstFee))
-                    item.additionalFee = Number(priceToNumber(item.additionalFee))
-                });
                 expressApi.editFeeRule(postData).then(() => {
                     ElMessage.success('保存成功')
                     this.init()

@@ -6,7 +6,7 @@
                 <el-switch v-model="record.enable" active-text="开启" inactive-text="关闭" />
             </el-form-item>
             <el-form-item label="包邮金额(元)">
-                <el-input-number :controls="false" :precision="2" v-model="record.amount" :step="0.01" :min="0"
+                <el-input-number :controls="false" :precision="2" v-model="record.amount" :min="0"
                 :value-on-clear="0" />
             </el-form-item>
             <el-form-item label="排除地区">
@@ -28,7 +28,6 @@ import { defineComponent } from 'vue'
 import expressApi from '@/api/express'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
-import { priceFormat, priceToNumber } from '@/utils'
 
 export default defineComponent({
     data() {
@@ -51,14 +50,12 @@ export default defineComponent({
             this.loading = true
             let result = await expressApi.getFreeRule()
             Object.assign(this.record, result.data.record)
-            this.record.amount = Number(priceFormat(this.record.amount))
             Object.assign(this.provinces, result.data.provinces)
             this.loading = false
         },
         submit() {
             this.loading = true
             let postData = Object.assign({}, this.record)
-            postData.amount = priceToNumber(postData.amount)
             expressApi.editFreeRule(postData).then(() => {
                 ElMessage.success('保存成功')
                 this.init()

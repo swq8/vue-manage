@@ -20,21 +20,21 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "tinymce": "^6.8.4",
-    "vue": "^3.4.31",
+    "vue": "^3.4.32",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@rollup/rollup-win32-x64-msvc": "^4.18.1",
-    "@types/node": "^20.14.10",
+    "@types/node": "^20.14.11",
     "@vitejs/plugin-vue": "^5.0.5",
-    "@vue/compiler-sfc": "^3.4.31",
+    "@vue/compiler-sfc": "^3.4.32",
     "@webxrd/vite-plugin-svg": "^1.0.11",
     "eslint": "^9.7.0",
     "sass": "^1.77.8",
     "typescript": "^5.5.3",
     "unplugin-auto-import": "^0.17.8",
-    "unplugin-vue-components": "^0.27.2",
-    "vite": "^5.3.3",
+    "unplugin-vue-components": "^0.27.3",
+    "vite": "^5.3.4",
     "vue-tsc": "^2.0.26"
   }
 }
