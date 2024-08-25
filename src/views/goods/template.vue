@@ -41,7 +41,7 @@ export default defineComponent({
     data() {
         const editorInit = {
             branding: false, // 隐藏右下角技术支持
-            language: 'zh-Hans',
+            language: 'zh_CN',
             promotion: false, // 隐藏右上角升级按钮
             plugins: "autolink code help image link media preview table",
             toolbar: ' formatselect | ' +
